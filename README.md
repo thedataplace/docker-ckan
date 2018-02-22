@@ -1,3 +1,13 @@
+# TDP CKAN Docker setup
+
+The `tdp` branch contains our dev setup & docker image files for production.
+
+The `master` branch is to be kept in sync with the upstream. 
+
+See instructions for development use below.
+TODO: add prod build steps
+
+------------------------------------------
 # Docker Compose setup for CKAN
 
 **Note**: :warning: This is a work in progress. There is likely to be issues so use with caution :warning:
