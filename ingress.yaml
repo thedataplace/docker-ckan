@@ -1,0 +1,57 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+  creationTimestamp: 2018-03-06T09:50:27Z
+  generation: 2
+  labels:
+    environment: production
+  name: ingress-production
+  namespace: default
+  resourceVersion: "23039146"
+  selfLink: /apis/extensions/v1beta1/namespaces/default/ingresses/ingress-production
+  uid: cc9edaaf-2123-11e8-8bcc-42010a9a0079
+spec:
+  rules:
+  - host: thedata.place
+    http:
+      paths:
+      - backend:
+          serviceName: martinbot
+          servicePort: 80
+        path: /
+  - host: www.thedata.place
+    http:
+      paths:
+      - backend:
+          serviceName: martinbot
+          servicePort: 80
+        path: /
+  - host: machester.thedata.place
+    http:
+      paths:
+      - backend:
+          serviceName: machester-ckan
+          servicePort: 80
+        path: /
+  - host: saltash.thedata.place
+    http:
+      paths:
+      - backend:
+          serviceName: saltash-ckan
+          servicePort: 80
+        path: /
+  - host: exeter.thedata.place
+    http:
+      paths:
+      - backend:
+          serviceName: exeter-ckan
+          servicePort: 80
+        path: /
+      - backend:
+          serviceName: exeter-datapusher
+          servicePort: 8800
+        path: /datapusher
+status:
+  loadBalancer: {}

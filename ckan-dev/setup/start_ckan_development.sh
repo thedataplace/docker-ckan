@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Install any local extensions in the src_extensions volume
 echo "Looking for local extensions to install..."
@@ -8,7 +8,6 @@ for i in $SRC_EXTENSIONS_DIR/*
 do
     if [ -d $i ];
     then
-
         if [ -f $i/pip-requirements.txt ];
         then
             pip install -r $i/pip-requirements.txt

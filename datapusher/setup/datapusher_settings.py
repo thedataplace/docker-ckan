@@ -11,6 +11,7 @@ NAME = 'datapusher'
 # database
 
 SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/job_store.db'
+# SSL_VERIFY = False
 
 # webserver host and port
 

@@ -10,10 +10,12 @@ RUN chmod 400 /root/.ssh/id_rsa
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
 RUN git clone git@github.com:thedataplace/ckanext-tdp.git  && \
+    git clone git@github.com:thedataplace/ckanext-exeter.git  && \
+    git clone git@github.com:thedataplace/ckanext-libraries.git  && \
     git clone -b static-uploader git@github.com:thedataplace/ckanext-cloudstorage.git
 
 
-FROM ckan-base:2.7
+FROM ckan-base:0.0.1
 
 MAINTAINER Gerben Neven <hello@gerritneven.nl>
 
@@ -24,12 +26,25 @@ MAINTAINER Gerben Neven <hello@gerritneven.nl>
 #    pip install -e git+https://github.com/ckan/ckanext-dcat.git@v0.0.6#egg=ckanext-dcat && \
 #    pip install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v1.0.6/requirements.txt
 
+COPY config.ini production.ini
+
 # Copy cloned repo's over from the intermediate image
 COPY --from=intermediate /ckanext-tdp /srv/app/ckanext-tdp
+COPY --from=intermediate /ckanext-exeter /srv/app/ckanext-exeter
+COPY --from=intermediate /ckanext-libraries /srv/app/ckanext-libraries
 COPY --from=intermediate /ckanext-cloudstorage /srv/app/ckanext-cloudstorage
 
-# Install extensions
-RUN pip install -e git+file:///srv/app/ckanext-tdp#egg=ckanext-tdp \
-    -e git+file:///srv/app/ckanext-cloudstorage@static-uploader#egg=ckanext-cloudstorage
+# Install extension
+RUN pip install pycrypto \
+    -e git+file:///srv/app/ckanext-tdp#egg=ckanext-tdp \
+    -e git+file:///srv/app/ckanext-exeter#egg=ckanext-exeter \
+    -e git+file:///srv/app/ckanext-libraries#egg=ckanext-libraries \
+    -e git+file:///srv/app/ckanext-cloudstorage@static-uploader#egg=ckanext-cloudstorage \
+    google-cloud-storage==1.7.0 \
+    -e git+https://github.com/okfn/ckanext-spatial.git#egg=ckanext-spatial \
+    ckanext-geoview 
+
+RUN pip install -r src/ckanext-spatial/pip-requirements.txt
+
 # Install the extension(s) you wrote for your own project
 # RUN pip install -e git+https://github.com/your-org/ckanext-your-extension.git@v1.0.0#egg=ckanext-your-extension

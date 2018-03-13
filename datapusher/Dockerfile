@@ -29,6 +29,7 @@ RUN apk add --no-cache python \
     cd datapusher && \
     python setup.py install && \
     pip install --no-cache-dir -r requirements.txt && \
+    pip install -U requests[security] && \
     # Remove temporary packages and files
     apk del .build-deps && \
     rm -rf ${APP_DIR}/src

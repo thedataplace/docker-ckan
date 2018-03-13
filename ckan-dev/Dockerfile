@@ -1,4 +1,4 @@
-FROM openknowledge/ckan-base:2.7
+FROM ckan-base
 
 MAINTAINER Open Knowledge International <info@okfn.org>
 

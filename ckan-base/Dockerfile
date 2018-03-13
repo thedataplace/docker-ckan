@@ -6,9 +6,10 @@ ENV SRC_DIR=/srv/app/src
 ENV CKAN_INI=${APP_DIR}/production.ini
 ENV PIP_SRC=${SRC_DIR}
 ENV CKAN_STORAGE_PATH=/var/lib/ckan
-ENV GIT_URL=https://github.com/ckan/ckan.git
+ENV GIT_URL=https://github.com/thedataplace/ckan.git
 # CKAN version to build
-ENV GIT_BRANCH=ckan-2.7.2
+# ENV GIT_BRANCH=ckan-2.7.2
+ENV GIT_BRANCH=callback-logger
 # Customize these on the .env file if needed
 ENV CKAN_SITE_URL=http://localhost:5000
 ENV CKAN__PLUGINS image_view text_view recline_view datastore datapusher envvars
