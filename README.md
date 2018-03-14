@@ -25,7 +25,7 @@ It includes the following images, all based on [Alpine Linux](https://alpinelinu
 
 * CKAN: modified from keitaro/ckan (see [CKAN Images](#ckan-images)) for more details)
 * DataPusher: modified from keitaro/datapusher
-* PostgresSQL: mdillon's PostGIS image
+* PostgreSQL: Official PostgreSQL image
 * Solr: official Solr image with CKAN's schema
 * Redis: standard Redis image
 
@@ -58,6 +58,15 @@ To start the containers:
 See [CKAN Images](#ckan-images) for more details of what happens when using development mode.
 
 
+### Running the debugger (pdb / ipdb)
+
+To run a container and be able to add a breakpoint with `pdb` or `ipdb`, run the `ckan-dev` container with the `--service-ports` option:
+
+    docker-compose -f docker-compose.dev.yml run --service-ports ckan-dev
+
+This will start a new container, displaying the standard output in your terminal. If you add a breakpoint in a source file in the `src` folder (`import pdb; pdb.set_trace()`) you will be able to inspect it in this terminal next time the code is executed.
+
+
 ## CKAN images
 
 ```
@@ -73,8 +82,8 @@ See [CKAN Images](#ckan-images) for more details of what happens when using deve
     | openknowledge/ckan-dev +----------------->   ckan   | (development)
     |                        |                 |          |
     +------------------------+                 +----------+
-    
-    
+
+
 ```
 
 The Docker images used to build your CKAN project are located in the `ckan/` folder. There are two Docker files:
@@ -88,3 +97,38 @@ The Docker images used to build your CKAN project are located in the `ckan/` fol
   * Make sure to add the local plugins to the `CKAN__PLUGINS` env var in the `.env` file.
 
 From these two base images you can build your own customized image tailored to your project, installing any extensions and extra requirements needed.
+
+### Extending the base images
+
+To perform extra initialization steps you can add scripts to your custom images and copy them to the `/docker-entrypoint.d` folder (The folder should be created for you when you build the image). Any `*.sh` and `*.py` file in that folder will be executed just after the main initialization script ([`prerun.py`](https://github.com/okfn/docker-ckan/blob/master/ckan-base/setup/prerun.py)) is executed and just before the web server and supervisor processes are started.
+
+For instance, consider the following custom image:
+
+```
+ckan
+├── docker-entrypoint.d
+│   └── setup_validation.sh
+├── Dockerfile
+└── Dockerfile.dev
+
+```
+
+We want to install an extension like [ckanext-validation](https://github.com/frictionlessdata/ckanext-validation) that needs to create database tables on startup time. We create a `setup_validation.sh` script in a `docker-entrypoint.d` folder with the necessary commands:
+
+```bash
+#!/bin/bash
+
+# Create DB tables if not there
+paster --plugin=ckanext-validation validation init-db -c $CKAN_INI
+```
+
+And then in our `Dockerfile` we install the extension and copy the initialization scripts:
+
+```Dockerfile
+FROM openknowledge/ckan-dev:2.7
+
+RUN pip install -e git+https://github.com/frictionlessdata/ckanext-validation.git#egg=ckanext-validation && \
+    pip install -r https://raw.githubusercontent.com/frictionlessdata/ckanext-validation/master/requirements.txt
+
+COPY docker-entrypoint.d/* /docker-entrypoint.d/
+```
