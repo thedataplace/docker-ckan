@@ -27,6 +27,7 @@ MAINTAINER Gerben Neven <hello@gerritneven.nl>
 #    pip install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v1.0.6/requirements.txt
 
 COPY config.ini production.ini
+COPY wsgi.py wsgi.py
 
 # Copy cloned repo's over from the intermediate image
 COPY --from=intermediate /ckanext-tdp /srv/app/ckanext-tdp
