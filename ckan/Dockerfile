@@ -13,7 +13,7 @@ RUN git clone -b 0.0.2 git@github.com:thedataplace/ckanext-cloudstorage.git && \
     git clone git@github.com:thedataplace/ckanext-exeter.git  && \
     git clone git@github.com:thedataplace/ckanext-libraries.git  && \
     git clone git@github.com:thedataplace/ckanext-pcc.git  && \
-    git clone git@github.com:thedataplace/ckanext-tdp.git
+    git clone -b v0.1.2 git@github.com:thedataplace/ckanext-tdp.git
 
 
 FROM ckan-base:2.7.3
@@ -50,7 +50,8 @@ RUN pip install pycrypto \
     -e git+file:///srv/app/ckanext-cloudstorage@0.0.2#egg=ckanext-cloudstorage \
     google-cloud-storage==1.7.0 \
     -e git+https://github.com/okfn/ckanext-spatial.git#egg=ckanext-spatial \
-    ckanext-geoview 
+    ckanext-geoview \
+    -r /srv/app/ckanext-tdp/requirements.txt
 
 RUN pip install -r src/ckanext-spatial/pip-requirements.txt
 
