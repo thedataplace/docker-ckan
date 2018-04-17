@@ -50,7 +50,7 @@ RUN pip install pycrypto \
     -e git+file:///srv/app/ckanext-cloudstorage@0.0.2#egg=ckanext-cloudstorage \
     google-cloud-storage==1.7.0 \
     -e git+https://github.com/okfn/ckanext-spatial.git#egg=ckanext-spatial \
-    -e git+https://github.com/ckan/ckanext-geoview.git@v0.0.13#egg=ckanext-geoview \
+    -e git+https://github.com/thedataplace/ckanext-geoview.git@master#egg=ckanext-geoview \
     -r /srv/app/ckanext-tdp/requirements.txt
 
 RUN pip install \
