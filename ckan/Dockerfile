@@ -13,7 +13,7 @@ RUN git clone -b 0.0.2 git@github.com:thedataplace/ckanext-cloudstorage.git && \
     git clone git@github.com:thedataplace/ckanext-exeter.git  && \
     git clone git@github.com:thedataplace/ckanext-libraries.git  && \
     git clone git@github.com:thedataplace/ckanext-pcc.git  && \
-    git clone -b v0.1.2 git@github.com:thedataplace/ckanext-tdp.git
+    git clone -b v0.1.3 git@github.com:thedataplace/ckanext-tdp.git
 
 
 FROM ckan-base:2.7.3
@@ -45,17 +45,16 @@ COPY --from=intermediate /ckanext-tdp /srv/app/ckanext-tdp
 RUN pip install pycrypto \
     -e git+file:///srv/app/ckanext-exeter#egg=ckanext-exeter \
     -e git+file:///srv/app/ckanext-libraries#egg=ckanext-libraries \
-    -e git+file:///srv/app/ckanext-tdp@v0.1.2#egg=ckanext-tdp \
+    -e git+file:///srv/app/ckanext-tdp@v0.1.3#egg=ckanext-tdp \
     -e git+file:///srv/app/ckanext-pcc@0.1.0#egg=ckanext-pcc \
     -e git+file:///srv/app/ckanext-cloudstorage@0.0.2#egg=ckanext-cloudstorage \
     google-cloud-storage==1.7.0 \
     -e git+https://github.com/okfn/ckanext-spatial.git#egg=ckanext-spatial \
-    -e git+https://github.com/thedataplace/ckanext-geoview.git@master#egg=ckanext-geoview \
+    -e git+https://github.com/thedataplace/ckanext-geoview.git@v0.0.12-patched-defs#egg=ckanext-geoview \
     -r /srv/app/ckanext-tdp/requirements.txt
 
 RUN pip install \
     -r src/ckanext-spatial/pip-requirements.txt \
-    -r src/ckanext-geoview/pip-requirements.txt
 
 # Install the extension(s) you wrote for your own project
 # RUN pip install -e git+https://github.com/your-org/ckanext-your-extension.git@v1.0.0#egg=ckanext-your-extension
