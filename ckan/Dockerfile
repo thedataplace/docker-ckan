@@ -32,7 +32,6 @@ COPY config.ini production.ini
 COPY wsgi.py wsgi.py
 
 RUN mkdir -p /packages/lib/python2.7/site-packages
-ENV PYTHONUSERBASE /packages
 
 # Copy cloned repo's over from the intermediate image
 COPY --from=intermediate /ckanext-cloudstorage /srv/app/ckanext-cloudstorage
