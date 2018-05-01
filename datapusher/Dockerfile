@@ -14,8 +14,8 @@ RUN apk add --no-cache python \
     py-gunicorn \
     libffi-dev \
     libressl-dev \
-    libxslt && \
-    # Temporary packages to build CKAN requirements
+    libxslt \
+    libmagic && \
     apk add --no-cache --virtual .build-deps \
     gcc \
     git \
@@ -23,16 +23,14 @@ RUN apk add --no-cache python \
     python-dev \
     libxml2-dev \
     libxslt-dev && \
-    # Fetch datapusher and install
     mkdir ${APP_DIR}/src && cd ${APP_DIR}/src && \
     git clone -b ${GIT_BRANCH} --depth=1 --single-branch ${GIT_URL} && \
     cd datapusher && \
-    python setup.py install && \
+    python setup.py develop && \
     pip install --no-cache-dir -r requirements.txt && \
     pip install -U requests[security] && \
-    # Remove temporary packages and files
-    apk del .build-deps && \
-    rm -rf ${APP_DIR}/src
+    apk del .build-deps
+    # rm -rf ${APP_DIR}/src
 
 COPY setup ${APP_DIR}
 
