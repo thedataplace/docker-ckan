@@ -27,6 +27,7 @@ RUN apk add --no-cache python \
     git clone -b ${GIT_BRANCH} --depth=1 --single-branch ${GIT_URL} && \
     cd datapusher && \
     python setup.py develop && \
+    pip install Flask-Login==0.3.2 flask==0.12.4 && \
     pip install --no-cache-dir -r requirements.txt && \
     pip install -U requests[security] && \
     apk del .build-deps
