@@ -44,7 +44,7 @@ COPY --from=intermediate /ckanext-tdp /srv/app/ckanext-tdp
 RUN pip install pycrypto \
     -e git+file:///srv/app/ckanext-exeter#egg=ckanext-exeter \
     -e git+file:///srv/app/ckanext-libraries#egg=ckanext-libraries \
-    -e git+file:///srv/app/ckanext-tdp@v0.2.0#egg=ckanext-tdp \
+    -e git+file:///srv/app/ckanext-tdp@v0.2.1#egg=ckanext-tdp \
     -e git+file:///srv/app/ckanext-pcc@0.1.0#egg=ckanext-pcc \
     -e git+file:///srv/app/ckanext-cloudstorage@0.0.2#egg=ckanext-cloudstorage \
     google-cloud-storage==1.7.0 \
