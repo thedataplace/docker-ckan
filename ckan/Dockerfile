@@ -16,7 +16,7 @@ RUN git clone git@github.com:thedataplace/ckanext-cloudstorage.git && \
     git clone git@github.com:thedataplace/ckanext-tdp.git
 
 
-FROM ckan-base:2.7.3
+FROM ckan-base:2.7.4
 
 MAINTAINER Gerben Neven <hello@gerritneven.nl>
 
