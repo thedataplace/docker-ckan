@@ -11,6 +11,9 @@ MAINTAINER Your Name Here <you@example.com>
 
 # RUN pip install -e git+https://github.com/thedataplace/ckanext-tdp@exeter#egg=ckanext-tdp
 
-RUN pip install -e "git+https://github.com/okfn/ckanext-spatial.git#egg=ckanext-spatial" && pip install -r src/ckanext-spatial/pip-requirements.txt
+RUN pip install \
+    git+https://github.com/thedataplace/ckanext-geoview.git@v0.0.12-patched-defs#egg=ckanext-geoview
+
+
 # Clone the extension(s) your are writing for your own project in the `src` folder
 # to get them mounted in this image at runtime

@@ -9,13 +9,14 @@ RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
 RUN chmod 400 /root/.ssh/id_rsa
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
-RUN git clone -b 0.0.2 git@github.com:thedataplace/ckanext-cloudstorage.git && \
+RUN git clone git@github.com:thedataplace/ckanext-cloudstorage.git && \
     git clone git@github.com:thedataplace/ckanext-exeter.git  && \
     git clone git@github.com:thedataplace/ckanext-libraries.git  && \
-    git clone git@github.com:thedataplace/ckanext-pcc.git
+    git clone git@github.com:thedataplace/ckanext-pcc.git && \
+    git clone git@github.com:thedataplace/ckanext-tdp.git
 
 
-FROM ckan-base:2.7.3
+FROM ckan-base:2.7.4
 
 MAINTAINER Gerben Neven <hello@gerritneven.nl>
 
@@ -31,8 +32,6 @@ COPY config.ini production.ini
 COPY wsgi.py wsgi.py
 
 RUN mkdir -p /packages/lib/python2.7/site-packages
-ENV PYTHONPATH = /packages
-RUN echo 'Defaults env_keep += "PYTHONPATH"' >> /etc/sudoers
 
 # Copy cloned repo's over from the intermediate image
 COPY --from=intermediate /ckanext-cloudstorage /srv/app/ckanext-cloudstorage
@@ -44,13 +43,16 @@ COPY --from=intermediate /ckanext-pcc /srv/app/ckanext-pcc
 RUN pip install pycrypto \
     -e git+file:///srv/app/ckanext-exeter#egg=ckanext-exeter \
     -e git+file:///srv/app/ckanext-libraries#egg=ckanext-libraries \
+    -e git+file:///srv/app/ckanext-tdp@v0.2.2#egg=ckanext-tdp \
     -e git+file:///srv/app/ckanext-pcc@0.1.0#egg=ckanext-pcc \
     -e git+file:///srv/app/ckanext-cloudstorage@0.0.2#egg=ckanext-cloudstorage \
     google-cloud-storage==1.7.0 \
     -e git+https://github.com/okfn/ckanext-spatial.git#egg=ckanext-spatial \
-    ckanext-geoview
+    -e git+https://github.com/thedataplace/ckanext-geoview.git@v0.0.12-patched-defs#egg=ckanext-geoview
 
-RUN pip install -r src/ckanext-spatial/pip-requirements.txt
+RUN pip install \
+    -r src/ckanext-spatial/pip-requirements.txt \
+    -r /srv/app/ckanext-tdp/requirements.txt
 
 # Install the extension(s) you wrote for your own project
 # RUN pip install -e git+https://github.com/your-org/ckanext-your-extension.git@v1.0.0#egg=ckanext-your-extension
