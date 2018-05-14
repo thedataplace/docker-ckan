@@ -5,6 +5,7 @@ jobs:
       - image: google/cloud-sdk
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Setup gcloud
           command: |
