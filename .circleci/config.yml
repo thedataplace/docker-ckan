@@ -16,7 +16,7 @@ jobs:
             gcloud --quiet auth configure-docker
       - run:
           name: Docker build
-          command:
+          command: |
             docker build ckan -t gcr.io/dataplace-181911/ckan:$CIRCLE_TAG
             docker push gcr.io/dataplace-181911/ckan:$CIRCLE_TAG
 
