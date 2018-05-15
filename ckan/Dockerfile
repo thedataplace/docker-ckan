@@ -5,7 +5,7 @@ RUN apk add --update git openssh
 
 ARG SSH_PRIVATE_KEY
 RUN mkdir -p /root/.ssh/
-RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
+RUN echo -n "${SSH_PRIVATE_KEY}" | base64 --decode > /root/.ssh/id_rsa
 RUN chmod 400 /root/.ssh/id_rsa
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
