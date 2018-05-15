@@ -38,7 +38,7 @@ COPY --from=intermediate /ckanext-tdp /srv/app/ckanext-tdp
 
 # Install extension
 RUN pip install pycrypto \
-    -e git+file:///srv/app/ckanext-tdp@v0.2.2#egg=ckanext-tdp \
+    -e git+file:///srv/app/ckanext-tdp@v0.2.3#egg=ckanext-tdp \
     -e git+file:///srv/app/ckanext-pcc@0.1.0#egg=ckanext-pcc \
     -e git+file:///srv/app/ckanext-cloudstorage@0.0.2#egg=ckanext-cloudstorage \
     google-cloud-storage==1.7.0 \
