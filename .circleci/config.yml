@@ -18,7 +18,7 @@ jobs:
           name: Docker build
           command: |
             docker build ckan -t gcr.io/dataplace-181911/ckan:$CIRCLE_TAG --build-arg SSH_PRIVATE_KEY=$SSH_KEY --no-cache
-            docker push gcr.io/dataplace-181911/ckan:$CIRCLE_TAG
+            docker push gcr.io/dataplace-181911/ckan:${CIRCLE_TAG:1}
 
 workflows:
   version: 2
