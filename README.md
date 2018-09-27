@@ -33,7 +33,7 @@ The site is configured via env vars (the base CKAN image loads [ckanext-envvars]
 
 Copy the included `.env.example` and rename it to `.env` to modify it depending on your own needs.
 
-Using the default values on the `.env.example` file will get you a working CKAN instance. There is a sysadmin user created by default with the values defined in `CKAN_SYSADMIN_NAME` and `CKAN_SYSADMIN_PASSWORD`(`ckan_admin` and `test` by default). I shouldn't be telling you this but obviously don't run any public CKAN instance with the default settings.
+Using the default values on the `.env.example` file will get you a working CKAN instance. There is a sysadmin user created by default with the values defined in `CKAN_SYSADMIN_NAME` and `CKAN_SYSADMIN_PASSWORD`(`ckan_admin` and `test1234` by default). I shouldn't be telling you this but obviously don't run any public CKAN instance with the default settings.
 
 To build the images:
 
@@ -56,6 +56,15 @@ To start the containers:
 	docker-compose -f docker-compose.dev.yml up
 
 See [CKAN Images](#ckan-images) for more details of what happens when using development mode.
+
+
+### Create an extension
+
+You can use the paster template in much the same way as a source install, only executing the command inside the CKAN container and setting the mounted `src/` folder as output:
+
+    docker-compose -f docker-compose.dev.yml exec ckan-dev /bin/bash -c "paster --plugin=ckan create -t ckanext ckanext-myext -o /srv/app/src_extensions"
+
+The new extension will be created in the `src/` folder. You might need to change the owner of its folder to have the appropiate permissions.
 
 
 ### Running the debugger (pdb / ipdb)
@@ -88,8 +97,8 @@ This will start a new container, displaying the standard output in your terminal
 
 The Docker images used to build your CKAN project are located in the `ckan/` folder. There are two Docker files:
 
-* `Dockerfile`: this is based on `openknowledge/ckan-base` (with the `Dockerfile` on the `ckan-base/` folder), an image with CKAN with all its dependencies, properly configured and running on [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) (production setup)
-* `Dockerfile.dev`: this is based on `openknowledge/ckan-dev` (with the `Dockerfile` on the `ckan-dev/` folder), wich extends `openknowledge/ckan-base` to include:
+* `Dockerfile`: this is based on `openknowledge/ckan-base` (with the `Dockerfile` on the `<version>/ckan-base/` folder), an image with CKAN with all its dependencies, properly configured and running on [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) (production setup)
+* `Dockerfile.dev`: this is based on `openknowledge/ckan-dev` (with the `Dockerfile` on the `<version>/ckan-dev/` folder), wich extends `openknowledge/ckan-base` to include:
 
   * Any extension cloned on the `src` folder will be installed in the CKAN container when booting up Docker Compose (`docker-compose up`). This includes installing any requirements listed in a `requirements.txt` (or `pip-requirements.txt`) file and running `python setup.py develop`.
   * The CKAN image used will development requirements needed to run the tests .
