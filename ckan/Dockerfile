@@ -52,7 +52,7 @@ RUN pip install \
 
 
 RUN pip install -r src/ckanext-harvest/pip-requirements.txt
-RUN python src/ckanext-harvest/setup.py develop
+RUN cd src/ckanext-harvest && python setup.py develop
 
 # Install the extension(s) you wrote for your own project
 # RUN pip install -e git+https://github.com/your-org/ckanext-your-extension.git@v1.0.0#egg=ckanext-your-extension
