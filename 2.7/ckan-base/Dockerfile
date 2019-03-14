@@ -17,35 +17,35 @@ WORKDIR ${APP_DIR}
 
 # Install necessary packages to run CKAN
 RUN apk add --no-cache git \
-        gettext \
-        postgresql-client \
-        python \
-        apache2-utils \
-        libxml2 \
-        libxslt \
-        musl-dev \
-        uwsgi \
-        uwsgi-http \
-        uwsgi-corerouter \
-        uwsgi-python \
-        py2-gevent \
-        uwsgi-gevent \
-        libmagic \
-        curl \
-        sudo && \
+    gettext \
+    postgresql-client \
+    python \
+    apache2-utils \
+    libxml2 \
+    libxslt \
+    musl-dev \
+    uwsgi \
+    uwsgi-http \
+    uwsgi-corerouter \
+    uwsgi-python \
+    py2-gevent \
+    uwsgi-gevent \
+    libmagic \
+    curl \
+    sudo && \
     # Packages to build CKAN requirements and plugins
     apk add --no-cache --virtual .build-deps \
-        postgresql-dev \
-        gcc \
-        make \
-        g++ \
-        autoconf \
-        automake \
-	libtool \
-        python-dev \
-        libxml2-dev \
-        libxslt-dev \
-        linux-headers && \
+    postgresql-dev \
+    gcc \
+    make \
+    g++ \
+    autoconf \
+    automake \
+    libtool \
+    python-dev \
+    libxml2-dev \
+    libxslt-dev \
+    linux-headers && \
     # Create SRC_DIR
     mkdir -p ${SRC_DIR} && \
     # Install pip, supervisord and uwsgi
@@ -66,7 +66,7 @@ RUN pip install -e git+${GIT_URL}@${GIT_BRANCH}#egg=ckan && \
     cd ${SRC_DIR}/ckan && \
     cp who.ini ${APP_DIR} && \
     # Workaround to solve https://github.com/psycopg/psycopg2/issues/594 in Alpine 3.7
-	sed -i -e "s/psycopg2==2.4.5/psycopg2==2.7.3.2/g" requirements.txt && \
+    sed -i -e "s/psycopg2==2.4.5/psycopg2==2.7.3.2/g" requirements.txt && \
     pip install --no-binary :all: -r requirements.txt && \
     # Install CKAN envvars to support loading config from environment variables
     pip install -e git+https://github.com/okfn/ckanext-envvars.git#egg=ckanext-envvars && \
@@ -85,6 +85,7 @@ RUN mkdir -p $CKAN_STORAGE_PATH && \
 
 COPY setup ${APP_DIR}
 COPY setup/supervisor.worker.conf /etc/supervisord.d/worker.conf
+COPY setup/supervisor.harvester.conf /etc/supervisord.d/harvester.conf.disabled
 COPY setup/uwsgi.conf /srv/app/uwsgi.conf
 
 # Create entrypoint directory for children image scripts
