@@ -25,7 +25,7 @@ MAINTAINER Gerben Neven <hello@gerritneven.nl>
 #    pip install -e git+https://github.com/ckan/ckanext-dcat.git@v0.0.6#egg=ckanext-dcat && \
 #    pip install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v1.0.6/requirements.txt
 
-RUN apk add --update git openssh libffi-dev
+RUN apk add --update git openssh libffi-dev tzdata
 COPY config.ini production.ini
 COPY wsgi.py wsgi.py
 
