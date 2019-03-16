@@ -45,7 +45,9 @@ RUN apk add --no-cache git \
     python-dev \
     libxml2-dev \
     libxslt-dev \
-    linux-headers && \
+    linux-headers \
+    tzdata && \
+    ln -fs /usr/share/zoneinfo/Etc/UTC /etc/locatime && \
     # Create SRC_DIR
     mkdir -p ${SRC_DIR} && \
     # Install pip, supervisord and uwsgi
