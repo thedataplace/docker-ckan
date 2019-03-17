@@ -28,7 +28,7 @@ MAINTAINER Gerben Neven <hello@gerritneven.nl>
 RUN apk add --update git openssh libffi-dev
 COPY config.ini production.ini
 COPY wsgi.py wsgi.py
-RUN apk addtzdata && \
+RUN apk add tzdata && \
   ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime
 
 RUN mkdir -p /packages/lib/python2.7/site-packages
