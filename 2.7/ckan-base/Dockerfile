@@ -32,7 +32,10 @@ RUN apk add --no-cache git \
     uwsgi-gevent \
     libmagic \
     curl \
-    sudo && \
+    sudo  \
+    libffi-dev \
+    tzdata && \
+    ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime && \ 
     # Packages to build CKAN requirements and plugins
     apk add --no-cache --virtual .build-deps \
     postgresql-dev \
@@ -45,9 +48,7 @@ RUN apk add --no-cache git \
     python-dev \
     libxml2-dev \
     libxslt-dev \
-    linux-headers \
-    tzdata && \
-    ln -fs /usr/share/zoneinfo/Etc/UTC /etc/locatime && \
+    linux-headers && \
     # Create SRC_DIR
     mkdir -p ${SRC_DIR} && \
     # Install pip, supervisord and uwsgi

@@ -25,7 +25,7 @@ MAINTAINER Gerben Neven <hello@gerritneven.nl>
 #    pip install -e git+https://github.com/ckan/ckanext-dcat.git@v0.0.6#egg=ckanext-dcat && \
 #    pip install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v1.0.6/requirements.txt
 
-RUN apk add --update git openssh libffi-dev tzdata
+RUN apk add --update git openssh libffi-dev
 COPY config.ini production.ini
 COPY wsgi.py wsgi.py
 
@@ -53,6 +53,8 @@ RUN pip install \
 
 RUN pip install -r src/ckanext-harvest/pip-requirements.txt
 RUN cd src/ckanext-harvest && python setup.py develop
+
+RUN pip install --upgrade pytz
 
 # Install the extension(s) you wrote for your own project
 # RUN pip install -e git+https://github.com/your-org/ckanext-your-extension.git@v1.0.0#egg=ckanext-your-extension
