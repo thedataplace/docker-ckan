@@ -2,6 +2,7 @@ version: "3"
 
 services:
   ckan-dev:
+    # image: gcr.io/dataplace-181911/ckan:2.8.3b
     build:
       context: ckan/
       dockerfile: Dockerfile.dev

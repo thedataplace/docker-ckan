@@ -14,7 +14,7 @@ RUN git clone git@github.com:thedataplace/ckanext-cloudstorage.git && \
   git clone git@github.com:thedataplace/ckanext-tdp.git
 
 
-FROM gcr.io/dataplace-181911/ckan-base:2.7.4
+FROM gcr.io/dataplace-181911/ckan-base:2.8.3
 
 MAINTAINER Gerben Neven <hello@gerritneven.nl>
 
@@ -40,7 +40,7 @@ COPY --from=intermediate /ckanext-tdp /srv/app/ckanext-tdp
 
 # Install extension
 RUN pip install pycrypto \
-  -e git+file:///srv/app/ckanext-tdp@v0.2.5#egg=ckanext-tdp \
+  -e git+file:///srv/app/ckanext-tdp@v0.2.7#egg=ckanext-tdp \
   -e git+file:///srv/app/ckanext-pcc@0.1.0#egg=ckanext-pcc \
   -e git+file:///srv/app/ckanext-cloudstorage@0.0.2#egg=ckanext-cloudstorage \
   google-cloud-storage==1.7.0 \

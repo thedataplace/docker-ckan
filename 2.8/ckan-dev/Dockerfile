@@ -1,4 +1,4 @@
-FROM openknowledge/ckan-base:2.8
+FROM gcr.io/dataplace-181911/ckan-base:2.8.3
 
 MAINTAINER Open Knowledge International <info@okfn.org>
 

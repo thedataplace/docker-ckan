@@ -1,4 +1,4 @@
-FROM ckan-dev:2.7.4
+FROM ckan-dev:2.8.3
 
 MAINTAINER Your Name Here <you@example.com>
 
@@ -16,7 +16,7 @@ RUN pip install \
     -e git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest
 
 RUN pip install \
-    -r src/ckanext-harvest/pip-requirements.txt \
-
+    -r src/ckanext-harvest/pip-requirements.txt
+  
 # Clone the extension(s) your are writing for your own project in the `src` folder
 # to get them mounted in this image at runtime
